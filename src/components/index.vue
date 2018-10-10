@@ -10,10 +10,10 @@
       <div class="bInfo">
         <div class="bInfo-name"><img :src="selectIcon"><span>{{Scurrency}}</span></div>
         <div class="bInfo-cny" v-bind:class="{redColor : (market.Increase<0)}">
-          <strong>￥{{market.close_CNY}}</strong>
+          <strong>${{market.close}}</strong>
           <span>{{market.Increase>0?"+"+market.Increase:market.Increase}}%</span>
         </div>
-        <div class="bInfo-my">≈${{market.close}}</div>
+        <div class="bInfo-my">≈￥{{market.close_CNY}}</div>
         <div class="bInfo-c">
           <span>市值:￥{{market.nowMarket}}</span>
           <span>24H交易量:{{market.amount}}</span>

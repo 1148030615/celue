@@ -39,7 +39,7 @@ font-size: 30px;background-color: rgba(255,255,255,0.1);  margin-bottom: 18px}
 .chart_title2{padding: 0; position: absolute;left: 0; top: 399px}
 .ChartCandlestick{ padding: 0 30px; height: 397px;}
 
-.Chart1{ width: 100%; height: 388px; background-image: url("../kuang1@3x.png"); background-size: 100% 100%; position: relative}
+
 .Chart1 .echarts{ width: 100%; height: 388px}
 .Chart1_tip{ line-height: 44px; color: #ff00ff; padding-right: 20px; position: absolute; height: 99px;
 left: 0; width: 90%; top: 320px; z-index: 100}
@@ -49,8 +49,7 @@ left: 0; width: 90%; top: 320px; z-index: 100}
 .Chart1_tip .view div:nth-child(2){ color: #fffc00}
 .Chart1_tip .view div.tips{ font-size: 20px; color: #14f7fb}
 
-.ChartBar{ margin: 0 30px; height: 200px; background-image: url("../kuang2@3x.png"); background-size: 100% auto;
-background-repeat: no-repeat}
+
 .ChartBar .echarts{ width: 100%;height: 200px;}
 .duihuan img{ display: block; width: 100%}
 
