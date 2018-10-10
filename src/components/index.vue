@@ -126,7 +126,7 @@ export default {
       isvip:false,
       selsect_bar:0,
       kline: chartFun.getOption([],[],[]),
-      bar:chartFun.getBarOption({volumes:[],categoryData:[]}),
+      //bar:chartFun.getBarOption({volumes:[],categoryData:[]}),
       myChart:false,
       lineData:{categoryData:[],values:[]},
       timer:false,
@@ -234,26 +234,6 @@ export default {
         }
 
       })
-    },
-    //闪烁动画
-    animate(){
-
-
-
-      var that = this;
-      that.timer = setInterval(function(){
-        let yesterday = that.selsect_bar==0?true:false
-        animated = !animated;
-        var PointRelList = chartFun.getPointRelList(that.lineData.categoryData?that.lineData.categoryData:[],that.lineData.values,that.pointArray);
-        if(animated){
-          var option = chartFun.getOption(that.lineData,[],PointRelList,yesterday);
-
-        }else{
-          var option = chartFun.getOption(that.lineData,that.markPointList,PointRelList,yesterday);
-        }
-        that.bar = chartFun.getBarOption(that.lineData,yesterday);
-        that.kline = option;
-      },1600);
     },
     intelligent_yesterday(){
       var that = this;

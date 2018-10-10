@@ -114,7 +114,7 @@ var chartFun = {
         {
           left: '10%',
           right: '8%',
-          height: '250px'
+          height: '230px'
         },
         {
           left: '10%',
@@ -241,7 +241,7 @@ var chartFun = {
           },
           markPoint: {
             data: markPointList,
-            animationDuration:2000
+            animationDuration:2000,
           }
         },
         {
@@ -570,7 +570,7 @@ var chartFun = {
             position:position,
             textShadowColor:color,
             textShadowBlur:5,
-            fontSize:24,
+            fontSize:20,
           }
         }
       }else{
@@ -607,7 +607,7 @@ var chartFun = {
             position:position,
             textShadowColor:color,
             textShadowBlur:5,
-            fontSize:24,
+            fontSize:20,
           }
         }
       }
@@ -700,113 +700,7 @@ var chartFun = {
       volumes:volumes
     };
   },
-  getBarOption(data,yesterday){
-    var volumes = data.volumes;
-    let dataZoom = {
-      start:80,
-      end:100
-    };
 
-    if(yesterday){
-      dataZoom = {
-        start:0,
-        end:50
-      };
-    }
-      return {
-        tooltip: {
-          trigger: 'axis',
-          axisPointer: {
-            type: 'cross'
-          },
-          backgroundColor: 'rgba(245, 245, 245, 0.8)',
-          borderWidth: 1,
-          borderColor: '#ccc',
-          padding: 10,
-          textStyle: {
-            color: '#000'
-          }
-          // extraCssText: 'width: 170px'
-        },
-
-
-        visualMap: {
-          show: false,
-          seriesIndex: 0,
-          dimension: 2,
-          pieces: [{
-            value: -1,
-            color: config.downColor
-          },{
-            value: 1,
-            color: config.upColor
-          }]
-        },
-        grid: [
-          {
-            left: '50px',
-            right: '40px',
-            top: '0%',
-            height: '80%'
-          }
-        ],
-        xAxis: [
-          {
-            type: 'category',
-            data: data.categoryData,
-            scale: true,
-
-            axisLine: {
-              show:false,
-              lineStyle:{
-                color:"#c8cacf",
-                type:"#dashed"
-              }
-            },
-            splitLine: {show: false},
-            //splitNumber: 20,
-            //min: 'dataMin',
-            //max: 'dataMax',
-            axisLabel:{ //调整x轴的lable
-              textStyle:{
-                fontSize:16 // 让字体变大
-              }
-            },
-
-
-          }
-        ],
-        yAxis: [
-          {
-            scale: true,
-            gridIndex: 0,
-            splitNumber: 2,
-            axisLabel: {show: false},
-            axisLine: {show: false},
-            axisTick: {show: false},
-            splitLine: {show: false}
-          }
-        ],
-        dataZoom: [
-          {
-            type: 'inside',
-            start: dataZoom.start,
-            end: dataZoom.end
-          }
-        ],
-        series: [
-          {
-            name: '值',
-            type: 'bar',
-            data: volumes,
-            barWidth:"60%",
-            lineStyle:{
-              color:"#fff"
-            }
-          }
-        ]
-      };
-  },
 
   getUrlParms(name){
     var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
