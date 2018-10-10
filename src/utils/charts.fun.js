@@ -131,8 +131,6 @@ var chartFun = {
           boundaryGap : false,
           splitLine: {show: false},
           splitNumber: 20,
-          min: 'dataMin',
-          max: 'dataMax',
           axisLine: {show:false,},
           axisTick: {show: false},
           axisLabel: {show: false},
@@ -155,8 +153,6 @@ var chartFun = {
           //splitLine: {show: false},
           //axisLabel: {show: false},
           splitNumber: 20,
-          min: 'dataMin',
-          max: 'dataMax',
           axisLabel:{ //调整x轴的lable
             textStyle:{
               fontSize:20 // 让字体变大
@@ -518,7 +514,6 @@ var chartFun = {
         name: '值',
         type: 'bar',
         data: volumes,
-        barWidth:"60%",
         lineStyle:{
           color:"#fff"
         }
@@ -683,13 +678,7 @@ var chartFun = {
 
 
       var c = parseFloat(rawData[i].close) - parseFloat(rawData[i].open);
-      if(c>0){
-        volumes.push([len-i-1, rawData[i].amount, 1]);
-      }else{
-        volumes.push([len-i-1, rawData[i].amount, -1]);
-      }
-
-
+      volumes.push([i, rawData[i].amount, c>0 ?1:-1]);
     }
 
   //console.log(volumes)

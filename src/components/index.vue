@@ -315,7 +315,6 @@ export default {
 
       that.market = datas.market;
       that.lineData = chartFun.splitline(Kline);
-
       var PointRelList = chartFun.getPointRelList(that.lineData.categoryData,that.lineData.values,that.pointArray);
       if(this.selsect_bar==0){
         var option = chartFun.getOption(that.lineData,that.markPointList,PointRelList,true);
