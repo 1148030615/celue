@@ -72,7 +72,7 @@ var chartFun = {
 
      if(yesterday){
        dataZoom = {
-         start:0,
+         start:40,
          end:100
        };
      }
@@ -90,7 +90,7 @@ var chartFun = {
         trigger: 'item',
         axisPointer: {
           type: 'cross'
-        }
+        },
       },
       axisPointer: {
         link: {xAxisIndex: 'all'},
@@ -144,7 +144,6 @@ var chartFun = {
           data: data.categoryData,
           scale: true,
           boundaryGap : false,
-          //axisLine: {onZero: false},
           axisLine: {
             show:false,
             onZero: false,
@@ -158,6 +157,11 @@ var chartFun = {
           splitNumber: 20,
           min: 'dataMin',
           max: 'dataMax',
+          axisLabel:{ //调整x轴的lable
+            textStyle:{
+              fontSize:20 // 让字体变大
+            }
+          },
           //inverse: true
         }
       ],
@@ -175,7 +179,7 @@ var chartFun = {
           },
           axisLabel:{ //调整x轴的lable
             textStyle:{
-              fontSize:16 // 让字体变大
+              fontSize:20 // 让字体变大
             }
           },
           splitLine:{
@@ -226,7 +230,7 @@ var chartFun = {
             formatter: function(e){
               console.log(e)
 
-              return "<div style='color:"+e.color+"'>" +
+              return "<div class='tips_font' style='color:"+e.color+"'>" +
                 "<span>日期:"+e.name+"</span><br>" +
                 "<span>开盘:"+e.data[1]+"</span><br>" +
                 "<span>收盘:"+e.data[2]+"</span><br>" +
@@ -254,7 +258,7 @@ var chartFun = {
             formatter: function(e){
               console.log(e)
 
-              return "<div style='color:"+e.color+"'>" +
+              return "<div class='tips_font' style='color:"+e.color+"'>" +
                 "<span>日期:"+e.name+"</span><br>" +
                 "<span>成交量:"+e.data[1]+"</span><br>" +
                 "</div>"
@@ -279,7 +283,7 @@ var chartFun = {
             formatter: function(e){
               console.log(e)
 
-              return "<div style='color:"+e.color+"'>" +
+              return "<div class='tips_font' style='color:"+e.color+"'>" +
                 "<span>日期:"+e.name+"</span><br>" +
                 "<span>开盘:"+e.data[1]+"</span><br>" +
                 "<span>收盘:"+e.data[2]+"</span><br>" +
@@ -308,7 +312,7 @@ var chartFun = {
             formatter: function(e){
               console.log(e)
 
-              return "<div style='color:"+e.color+"'>" +
+              return "<div class='tips_font' style='color:"+e.color+"'>" +
                 "<span>日期:"+e.name+"</span><br>" +
                 "<span>开盘:"+e.data[1]+"</span><br>" +
                 "<span>收盘:"+e.data[2]+"</span><br>" +

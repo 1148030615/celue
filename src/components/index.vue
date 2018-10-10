@@ -10,7 +10,7 @@
       <div class="bInfo">
         <div class="bInfo-name"><img :src="selectIcon"><span>{{Scurrency}}</span></div>
         <div class="bInfo-cny" v-bind:class="{redColor : (market.Increase<0)}">
-          <strong>${{market.close}}</strong>
+          <strong>{{market.close}}USDT</strong>
           <span>{{market.Increase>0?"+"+market.Increase:market.Increase}}%</span>
         </div>
         <div class="bInfo-my">≈￥{{market.close_CNY}}</div>
@@ -387,7 +387,11 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
+
 <style scoped>
   @import "../assets/style/index.css";
+</style>
+<style>
+  .tips_font{ font-size: 20px; line-height: 1.4}
 </style>
 
