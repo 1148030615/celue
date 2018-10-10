@@ -207,7 +207,7 @@ var chartFun = {
       ,
       series: [
         {
-          name: 'Dow-Jones index',
+          name: 'data',
           type: 'candlestick',
           data: data.values,
           itemStyle: {
@@ -271,6 +271,23 @@ var chartFun = {
             borderColor: 'rgba(0,0,0,0)',
             borderColor0: 'rgba(0,0,0,0)'
           },
+          tooltip: {
+            trigger: 'item',
+            axisPointer: {
+              type: 'cross'
+            },
+            formatter: function(e){
+              console.log(e)
+
+              return "<div style='color:"+e.color+"'>" +
+                "<span>日期:"+e.name+"</span><br>" +
+                "<span>开盘:"+e.data[1]+"</span><br>" +
+                "<span>收盘:"+e.data[2]+"</span><br>" +
+                "<span>最低:"+e.data[3]+"</span><br>" +
+                "<span>最高:"+e.data[4]+"</span><br>" +
+                "</div>"
+            }
+          }
         }
         ,
         {
@@ -283,6 +300,23 @@ var chartFun = {
             borderColor: 'rgba(0,0,0,0)',
             borderColor0: 'rgba(0,0,0,0)'
           },
+          tooltip: {
+            trigger: 'item',
+            axisPointer: {
+              type: 'cross'
+            },
+            formatter: function(e){
+              console.log(e)
+
+              return "<div style='color:"+e.color+"'>" +
+                "<span>日期:"+e.name+"</span><br>" +
+                "<span>开盘:"+e.data[1]+"</span><br>" +
+                "<span>收盘:"+e.data[2]+"</span><br>" +
+                "<span>最低:"+e.data[3]+"</span><br>" +
+                "<span>最高:"+e.data[4]+"</span><br>" +
+                "</div>"
+            }
+          }
         },
       ]
     }
@@ -516,7 +550,7 @@ var chartFun = {
         temp = {
 
           symbol:"image://"+icon,
-          name: 'XX标点',
+          name: ' ',
           coord: [pointArray[i].date,pointArray[i].pointval],
           value: way+':'+pointArray[i].value,
           symbolKeepAspect:true,
@@ -552,7 +586,7 @@ var chartFun = {
         }
         temp = {
           symbol:"image://"+icon,
-          name: 'XX标点',
+          name: ' ',
           coord: [pointArray[i].date,pointArray[i].pointval],
           value: way+':'+pointArray[i].value,
           symbolKeepAspect:true,
