@@ -63,6 +63,8 @@ var chartFun = {
   //获取参数
   getOption(data,markPointList,PointRelList,yesterday){
 
+    var volumes = data.volumes;
+    console.log(volumes)
      let dataZoom = {
        start:80,
        end:100
@@ -71,17 +73,235 @@ var chartFun = {
      if(yesterday){
        dataZoom = {
          start:0,
-         end:50
+         end:100
        };
      }
 
   //console.log(PointRelList)
-  var option = {
-    grid: {
-      left: '50px',
-      right: '40px',
-      bottom: '120px',
-    },
+
+
+
+
+    var option = {
+
+
+
+      tooltip: {
+        trigger: 'item',
+        axisPointer: {
+          type: 'cross'
+        }
+      },
+      axisPointer: {
+        link: {xAxisIndex: 'all'},
+        label: {
+          backgroundColor: '#777'
+        }
+      },
+      visualMap: {
+        show: false,
+        seriesIndex: 1,
+        dimension: 2,
+        pieces: [{
+          value: 1,
+          color: config.upColor
+        }, {
+          value: -1,
+          color: config.downColor
+        }]
+      },
+      grid: [
+        {
+          left: '10%',
+          right: '8%',
+          height: '250px'
+        },
+        {
+          left: '10%',
+          right: '8%',
+          bottom: '40px',
+          height: '162px'
+        }
+      ],
+      xAxis: [
+        {
+          type: 'category',
+          data: data.categoryData,
+          scale: true,
+          boundaryGap : false,
+          splitLine: {show: false},
+          splitNumber: 20,
+          min: 'dataMin',
+          max: 'dataMax',
+          axisLine: {show:false,},
+          axisTick: {show: false},
+          axisLabel: {show: false},
+          //inverse: true
+        },
+        {
+          type: 'category',
+          gridIndex: 1,
+          data: data.categoryData,
+          scale: true,
+          boundaryGap : false,
+          //axisLine: {onZero: false},
+          axisLine: {
+            show:false,
+            onZero: false,
+            lineStyle:{
+              color:"#14f7fb",
+            }
+          },
+          //axisTick: {show: false},
+          //splitLine: {show: false},
+          //axisLabel: {show: false},
+          splitNumber: 20,
+          min: 'dataMin',
+          max: 'dataMax',
+          //inverse: true
+        }
+      ],
+      yAxis: [
+        {
+          scale: true,
+
+          splitArea: {
+          },
+          axisLine: {
+            show:false,
+            lineStyle:{
+              color:"#14f7fb",
+            }
+          },
+          axisLabel:{ //调整x轴的lable
+            textStyle:{
+              fontSize:16 // 让字体变大
+            }
+          },
+          splitLine:{
+            //show:false,
+            //横向实线
+            lineStyle:{
+              color:["#373d51"],
+            }
+          },
+        },
+        {
+          scale: true,
+          gridIndex: 1,
+          splitNumber: 2,
+          axisLabel: {show: false},
+          axisLine: {show: false},
+          axisTick: {show: false},
+          splitLine: {show: false}
+        }
+      ],
+      dataZoom:
+        {
+          type: 'inside',
+          xAxisIndex: [0, 1],
+          start: dataZoom.start,
+          end: dataZoom.end
+        }
+
+      ,
+      series: [
+        {
+          name: 'Dow-Jones index',
+          type: 'candlestick',
+          data: data.values,
+          itemStyle: {
+            normal: {
+              color: config.upColor,
+              color0: config.downColor,
+              borderColor: config.upColor,
+              borderColor0: config.downColor
+            }
+          },
+          tooltip: {
+            trigger: 'item',
+            axisPointer: {
+              type: 'cross'
+            },
+            formatter: function(e){
+              console.log(e)
+
+              return "<div style='color:"+e.color+"'>" +
+                "<span>日期:"+e.name+"</span><br>" +
+                "<span>开盘:"+e.data[1]+"</span><br>" +
+                "<span>收盘:"+e.data[2]+"</span><br>" +
+                "<span>最低:"+e.data[3]+"</span><br>" +
+                "<span>最高:"+e.data[4]+"</span><br>" +
+                "</div>"
+            }
+          },
+          markPoint: {
+            data: markPointList,
+            animationDuration:2000
+          }
+        },
+        {
+          name: 'Volume',
+          type: 'bar',
+          xAxisIndex: 1,
+          yAxisIndex: 1,
+          data: data.volumes,
+          tooltip: {
+            trigger: 'item',
+            axisPointer: {
+              type: 'cross'
+            },
+            formatter: function(e){
+              console.log(e)
+
+              return "<div style='color:"+e.color+"'>" +
+                "<span>日期:"+e.name+"</span><br>" +
+                "<span>成交量:"+e.data[1]+"</span><br>" +
+                "</div>"
+            }
+          }
+        },
+        {
+          name: '做空',
+          type: 'candlestick',
+          data: PointRelList.sellArray,
+          itemStyle: {
+            color :'#fffc00',
+            color0: '#fffc00',
+            borderColor: 'rgba(0,0,0,0)',
+            borderColor0: 'rgba(0,0,0,0)'
+          },
+        }
+        ,
+        {
+          name: '做多',
+          type: 'candlestick',
+          data: PointRelList.buyArray,
+          itemStyle: {
+            color :'#ff00ff',
+            color0: '#ff00ff',
+            borderColor: 'rgba(0,0,0,0)',
+            borderColor0: 'rgba(0,0,0,0)'
+          },
+        },
+      ]
+    }
+
+
+  var option1 = {
+    grid:[
+      {
+        left: '10%',
+        right: '8%',
+        height: '50%'
+      },
+      {
+        left: '10%',
+        right: '8%',
+        top: '63%',
+        height: '16%'
+      }
+    ],
     //鼠标移上去提示
     tooltip: {
         trigger: 'item',
@@ -100,64 +320,116 @@ var chartFun = {
           "</div>"
       }
     },
-    // tooltip : {
-    //   trigger: 'item',
-    //   //formatter: "<div class='form_box'></div>"
+    visualMap: {
+      show: false,
+      seriesIndex: 3,
+      dimension: 2,
+      pieces: [{
+        value: -1,
+        color: config.downColor
+      },{
+        value: 1,
+        color: config.upColor
+      }]
+    },
+    xAxis: [
+    //   {
+    //   type: 'category',
+    //   data: data.categoryData,
+    //   //scale: true,
+    //   //boundaryGap : false,
+    //   axisLabel:{ //调整x轴的lable
+    //     textStyle:{
+    //       fontSize:16 // 让字体变大
+    //     }
+    //   },
+    //
+    //   axisLine: {
+    //     onZero: false,
+    //     show:false,
+    //     lineStyle:{
+    //       color:"#d1d1d1",
+    //     }
+    //   },
+    //   splitLine: {show: false},
+    //   splitNumber: 20,
+    //   min: 'dataMin',
+    //   max: 'dataMax',
+    //   tooltip: {
+    //     trigger: 'axis',
+    //     axisPointer: {
+    //       type: 'cross'
+    //     }
+    //   },
     // },
-    xAxis: {
-      type: 'category',
-      data: data.categoryData,
-      //scale: true,
-      //boundaryGap : false,
-      axisLabel:{ //调整x轴的lable
-        textStyle:{
-          fontSize:16 // 让字体变大
-        }
-      },
+      {
+        type: 'category',
+        data: data.categoryData,
+        scale: true,
+        boundaryGap : false,
+        axisLine: {onZero: false},
+        splitLine: {show: false},
+        splitNumber: 20,
+        min: 'dataMin',
+        max: 'dataMax',
 
-      axisLine: {
-        onZero: false,
-        show:false,
-        lineStyle:{
-          color:"#d1d1d1",
+      },
+      {
+        type: 'category',
+        gridIndex: 1,
+        data: data.categoryData,
+        scale: true,
+        boundaryGap : false,
+        axisLine: {onZero: false},
+        axisTick: {show: false},
+        splitLine: {show: false},
+        axisLabel: {show: false},
+        splitNumber: 20,
+        min: 'dataMin',
+        max: 'dataMax'
+      }],
+    yAxis: [
+    //   {
+    //   scale: true,
+    //   show:true,
+    //   fontSize:24,
+    //   splitArea: {
+    //   },
+    //   axisLine: {
+    //     show:false,
+    //     lineStyle:{
+    //       color:"#d1d1d1",
+    //     }
+    //   },
+    //   axisLabel:{ //调整x轴的lable
+    //     textStyle:{
+    //       fontSize:16 // 让字体变大
+    //     }
+    //   },
+    //   splitLine:{
+    //     //show:false,
+    //     //横向实线
+    //     lineStyle:{
+    //       color:["#3e3e94"],
+    //     }
+    //   },
+    // },
+      {
+        scale: true,
+        splitArea: {
+          show: true
         }
       },
-      splitLine: {show: false},
-      splitNumber: 20,
-      min: 'dataMin',
-      max: 'dataMax',
-      tooltip: {
-        trigger: 'axis',
-        axisPointer: {
-          type: 'cross'
-        }
-      },
-    },
-    yAxis: {
-      scale: true,
-      show:true,
-      fontSize:24,
-      splitArea: {
-      },
-      axisLine: {
-        show:false,
-        lineStyle:{
-          color:"#d1d1d1",
-        }
-      },
-      axisLabel:{ //调整x轴的lable
-        textStyle:{
-          fontSize:16 // 让字体变大
-        }
-      },
-      splitLine:{
-        //show:false,
-        //横向实线
-        lineStyle:{
-          color:["#3e3e94"],
-        }
-      },
-    },
+      {
+        scale: true,
+        gridIndex: 1,
+        splitNumber: 1,
+        axisLabel: {show: false},
+        axisLine: {show: false},
+        axisTick: {show: false},
+        splitLine: {show: false}
+      }
+    ],
     dataZoom: [
       {
         type: 'inside',
@@ -203,6 +475,15 @@ var chartFun = {
           borderColor: 'rgba(0,0,0,0)',
           borderColor0: 'rgba(0,0,0,0)'
         },
+      },
+      {
+        name: '值',
+        type: 'bar',
+        data: volumes,
+        barWidth:"60%",
+        lineStyle:{
+          color:"#fff"
+        }
       }
 
 
@@ -357,17 +638,17 @@ var chartFun = {
     var volumes = [];
     var len = rawData.length;
     for (var i = 0; i < len; i++) {
-      categoryData.unshift(this.dateformat(rawData[i].id));
+      categoryData.push(this.dateformat(rawData[i].id));
       //数据意义：开盘(open)，收盘(close)，最低(lowest)，最高(highest)
       var temp = [rawData[i].open,rawData[i].close,rawData[i].low,rawData[i].high];
-      values.unshift(temp);
+      values.push(temp);
 
 
       var c = parseFloat(rawData[i].close) - parseFloat(rawData[i].open);
       if(c>0){
-        volumes.unshift([len-i-1, rawData[i].amount, 1]);
+        volumes.push([len-i-1, rawData[i].amount, 1]);
       }else{
-        volumes.unshift([len-i-1, rawData[i].amount, -1]);
+        volumes.push([len-i-1, rawData[i].amount, -1]);
       }
 
 

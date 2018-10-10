@@ -32,33 +32,44 @@
         </div>
         <div class="chart_title">火币,{{Scurrency}}/USDT,15分</div>
 
-        <div class="zql_cont" v-show="selsect_bar==0">当日准确率：<span>{{today_accuracyrate}}</span></div>
+        <div class="zql_cont" v-show="selsect_bar==0 && today_accuracyrate">当日准确率：<span>{{today_accuracyrate}}</span></div>
       </div>
 
 
-      <div v-bind:class="{hide:(selsect_bar == 1 && !isvip) } " class="ChartCandlestick">
-        <div class="Chart1" >
-          <v-chart :options="kline" group="radiance" ref="cart1" />
+      <!--<div v-bind:class="{hide:(selsect_bar == 1 && !isvip) } " class="ChartCandlestick">-->
+        <!--<div class="Chart1" >-->
+          <!--&lt;!&ndash;<v-chart :options="kline" group="radiance" ref="cart1" />&ndash;&gt;-->
 
-          <div class="Chart1_tip">
-            <div class="view">
-              <div><img src="../assets/duo.png">多</div>
-              <div><img src="../assets/kong.png">空</div>
-            </div>
-          </div>
+          <!---->
+      <!--</div>-->
+
+
+
+
+    <!--<div class="chart_title">成交量：{{market.amount}}</div>-->
+    <!--<div class="ChartBar ">-->
+      <!--<v-chart :options="bar" group="radiance"  ref="cart2" />-->
+
+    <!--</div>-->
+
+
+
+    <div class="chart_content">
+      <v-chart :options="kline" class="charts" style="width: 690px" />
+
+      <div class="Chart1_tip">
+        <div class="view">
+          <!--<div><img src="../assets/duo.png"><span>多</span></div>-->
+          <!--<div><img src="../assets/kong.png"><span>空</span></div>-->
+          <div class="tips"><img src="../assets/up.png" class="icons">  买入  , <img src="../assets/down.png" class="icons"> 卖出，  <i class="icon_duo"></i> 多 , <i class="icon_kong"></i>  空</div>
         </div>
       </div>
-
+      <div class="chart_title chart_title2">成交量：{{market.amount}}</div>
       <div class="duihuan" v-show="selsect_bar == 1 && !isvip" style="display: none" @click="exchange()">
-        <img src="../assets/bimg.png">
+        <img src="../assets/bimg2.png">
       </div>
-
-
-    <div class="chart_title">成交量：{{market.amount}}</div>
-    <div class="ChartBar ">
-      <v-chart :options="bar" group="radiance"  ref="cart2" />
-
     </div>
+
 
   </div>
 </template>
@@ -137,7 +148,7 @@ export default {
         'symbol':'btcusdt',
         'period':'15min',
         'coinName':'比特币',
-        'size':130
+        'size':192
       }
     }
   },
@@ -160,17 +171,15 @@ export default {
     this.intelligent_yesterday();
     this.getUserType();
     //this.startSocket();
-    this.getKlinedata()
+    this.getKlinedata();
 
-    let that = this;
-    setTimeout(function(){
-    EChart.connect('radiance');
-      //let ref = this.$refs;
-
-    },5000)
-this.getdivice()
-
-
+    // let that = this;
+    // setTimeout(function(){
+    // EChart.connect('radiance');
+    //   //let ref = this.$refs;
+    //
+    // },5000);
+    //this.getdivice()
 
 
     //echarts.connect([chart1, chart2]);
@@ -194,12 +203,21 @@ this.getdivice()
         });
 
     },
-    //获取K线图
+    //ajax获取K线图
     getKlinedata(){
       let that = this;
-      let postdata = 'symbol='+that.socketSendData.symbol+"&period="+that.socketSendData.period+"&coinName="+that.socketSendData.coinName+"&size=130"
-      chartFun.Ajax.post(apiurl+"api/Kline",postdata,function(res){
-        console.log(res)
+      let postdata = 'symbol='+that.socketSendData.symbol+"&period="+that.socketSendData.period+"&coinName="+that.socketSendData.coinName+"&size=195"
+      chartFun.Ajax.post(apiurl+"api/Kline",postdata,function(evt){
+
+        let data = JSON.parse(evt);
+
+
+        if(data.code==-1){
+
+        }else{
+          //var datas = JSON.parse(evt.data);
+          that.setData(data.data)
+        }
       })
     },
     //判断是否购买了产品
@@ -242,6 +260,8 @@ this.getdivice()
       chartFun.Ajax.post(apiurl+'api/intelligent_yesterday','pageSize=10000&symbol='+this.Scurrency,function(res){
         var data = JSON.parse(res);
         if(data.code == 1){
+
+
           that.pointArray = data.data.list;
           that.markPointList = chartFun.clearPoint(data.data.list);
           that.today_accuracyrate = data.data.today_accuracyrate;
@@ -270,7 +290,7 @@ this.getdivice()
         'symbol':currency[val]['enname'],
         'period':'15min',
         'coinName':currency[val]['name'],
-        'size':130
+        'size':100
       };
       this.selectIcon=currency[val]['icon'];
 
@@ -279,7 +299,8 @@ this.getdivice()
       }else if(this.selsect_bar==1 && this.isvip){
         this.intelligent_today();
       }
-      this.ws.send(JSON.stringify(this.socketSendData));
+      //this.ws.send(JSON.stringify(this.socketSendData));
+      this.getKlinedata()
     },
     exchange(){
 
@@ -294,6 +315,7 @@ this.getdivice()
     },
     setSelectedBar(val){
       this.selsect_bar = val;
+      this.getKlinedata();
       if(val==0){
         this.intelligent_yesterday();
       }else if(val==1 && this.isvip){
@@ -303,20 +325,24 @@ this.getdivice()
 
     //整理返回数据
     setData(datas){
-      if(datas.kline.length<5){
+
+      let Kline = this.selsect_bar == 0?datas.yesterday:datas.kline;
+
+      if(Kline<5){
         return;
       }
       let that = this;
+
       that.market = datas.market;
-      that.lineData = chartFun.splitline(datas.kline);
+      that.lineData = chartFun.splitline(Kline);
 
       var PointRelList = chartFun.getPointRelList(that.lineData.categoryData,that.lineData.values,that.pointArray);
       if(this.selsect_bar==0){
         var option = chartFun.getOption(that.lineData,that.markPointList,PointRelList,true);
-        that.bar = chartFun.getBarOption(that.lineData,true);
+        //that.bar = chartFun.getBarOption(that.lineData,true);
       }else{
         var option = chartFun.getOption(that.lineData,that.markPointList,PointRelList);
-        that.bar = chartFun.getBarOption(that.lineData);
+        //that.bar = chartFun.getBarOption(that.lineData);
       }
 
 
