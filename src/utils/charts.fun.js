@@ -53,10 +53,10 @@ var chartFun = {
     var m = time.getMonth()+1;
     var d = time.getDate();
     var h = time.getHours();
-    h = h<10?"0"+h:h;
     var mm = time.getMinutes();
-    mm = mm<10?"0"+mm:mm;
     var s = time.getSeconds();
+    mm = mm<10?"0"+mm:mm;
+    h = h<10?"0"+h:h;
     return m+'-'+d+' '+h+':'+mm;
 
   },
@@ -64,7 +64,7 @@ var chartFun = {
   getOption(data,markPointList,PointRelList,yesterday){
 
     var volumes = data.volumes;
-    console.log(volumes)
+    console.log(22222,markPointList,PointRelList,data)
      let dataZoom = {
        start:80,
        end:100
@@ -526,6 +526,7 @@ var chartFun = {
 },
 
   clearPoint(pointArray){
+
     var tempArray = [];
     for(var i = 0;i < pointArray.length;i++){
 
@@ -536,14 +537,14 @@ var chartFun = {
         var color = '#fffc00';
         if(pointArray[i].type == 0){
           //卖出
-          var icon =icon1;
-          var symbolOffset=[0 ,'50%'];
-          var position = 'bottom';
-        }else{
-          //买入
           var icon =icon2;
           var symbolOffset=[0 ,'-50%'];
           var position = 'top';
+        }else{
+          //买入
+          var icon =icon1;
+          var symbolOffset=[0 ,'50%'];
+          var position = 'bottom';
         }
 
         temp = {
@@ -557,8 +558,7 @@ var chartFun = {
             normal: {color: color,color0: color},
           },
           tooltip : {
-            trigger: 'item',
-            formatter: "<div class='form_box'> </div>"
+            show:false
           },
           symbolOffset:symbolOffset,
           label:{
@@ -574,14 +574,14 @@ var chartFun = {
         //做多
         if(pointArray[i].type == 0){
           //卖出
-          var icon =icon3;
-          var symbolOffset=[0 ,'50%'];
-          var position = 'bottom';
-        }else{
-          //买入
           var icon =icon4;
           var symbolOffset=[0 ,'-50%'];
           var position = 'top';
+        }else{
+          //买入
+          var icon =icon3;
+          var symbolOffset=[0 ,'50%'];
+          var position = 'bottom';
         }
         temp = {
           symbol:"image://"+icon,
@@ -594,8 +594,7 @@ var chartFun = {
             color:color,
           },
           tooltip : {
-            trigger: 'item',
-            //formatter: "<div class='form_box'> </div>"
+            show:false
           },
           symbolOffset:symbolOffset,
           label:{
@@ -614,7 +613,7 @@ var chartFun = {
 
     return tempArray;
     //markPointList = tempArray;
-    //console.log(markPointList)
+
 
 
   },

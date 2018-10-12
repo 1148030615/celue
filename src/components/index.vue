@@ -259,6 +259,7 @@ export default {
         if(data.code == 1){
           that.pointArray = data.data.list;
           that.markPointList = chartFun.clearPoint(data.data.list);
+          console.log(that.markPointList)
           that.date_str = data.data.date_str
         }
       })
