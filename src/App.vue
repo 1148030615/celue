@@ -33,7 +33,7 @@
   }
 </script>
 <style>
-  body{background-color: #041131}
+  body{background-color: #070a17}
   *{ padding: 0; margin: 0}
   img{ border: none}
 </style>
