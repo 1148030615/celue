@@ -1,5 +1,5 @@
 
-.main{ background-image: url(../main_bg.jpg); background-size: contain}
+
 .header{ z-index: 1001; height: 65px; display: flex; flex-direction: row; 
   justify-content: space-around; align-items: center; background-color:#2d303d;
   width: 95%; margin: auto; margin-top: 14px; border-radius: 10px}
@@ -60,7 +60,7 @@ left: 0; width: 90%; top: 406px; z-index: 100}
 .redColor{ color: #d94e41}
 
 
-.chart_content{ background-size: 100% auto; position: relative; width: 690px; height: 700px; margin: auto; background-image: url(../kuang.png); background-repeat: no-repeat; background-position: center top; margin-bottom: 25px}
+.chart_content{ transform: rotate3d(0,0,0); background-size: 100% auto; position: relative; width: 690px; height: 700px; margin: auto; background-image: url(../kuang.png); background-repeat: no-repeat; background-position: center top; margin-bottom: 25px}
 .charts{ width: 100%; height: 100%}
 .duihuan{ position: absolute; top: 1px; left: 1px; z-index: 10000}
 .icons{ height: 26px}
@@ -94,13 +94,13 @@ justify-content: flex-end; color: #fff}
 .replay_item_row3 img{ height: 30px; margin-right: 7px;}
 .replay_item{ margin-bottom: 10px;}
 /* 回复框 */
-.replay_form{ z-index: 100; position: fixed; left: 0; bottom:0; width: 100%; height: 100px; display: flex; align-items: center; background-color: #fff; flex-direction: row;
+.replay_form{ transform: translate3d(0,0,0); z-index: 1000; position: fixed; left: 0; bottom:0; width: 100%; height: 100px; display: flex; align-items: center; background-color: #fff; flex-direction: row;
 padding: 0 30px; justify-content: space-between}
 .replay_form_input{ flex: 7; height: 68px; border-radius: 6px;border: 1px solid #eeeef0; padding: 0 25px;font-size: 24px; color: #999999;
 outline: none}
 .replay_form_btn{ flex: 1; text-align: right}
 .replay_form_btn img{ height: 54px;}
-
+.fencheng{transform: translate3d(0,0,0);}
 
 /* 顶部 */
 .headers{ height: 164px; position: fixed; left: 0; width: 100%; top: 0; z-index: 10001}
@@ -144,6 +144,7 @@ padding: 15px 37px;}
 .celue-list:before{content: " "; position: absolute; background-color: #fff; width: 1px; left: 199px; top: 90px; bottom:0; height: 100%}
 .celue_item{ position: relative; z-index:2; color: #fff; overflow: hidden; display: flex; flex-direction: row; flex-wrap: nowrap; justify-content: space-between;
 margin-bottom: 22px;}
+.celue-list-no:before{ display: none}
 .celue_item_date{ width: 112px; padding-top: 14px;}
 .celue_item_date div{ font-size: 28px; line-height: 35px; text-align: center}
 .celue_item_date span{ font-size: 24px; line-height: 30px;}
@@ -189,6 +190,11 @@ margin-bottom: 22px;}
   }
 
 }
+.celue_item_r{
+  .more{
+    text-align: center; font-size: 24px; line-height: 46px; height: 46px;border-top: 1px dashed #000000;
+  }
+}
 
 .celue_history{
   .celue_item_r_zy,.celue_item_r_content{ display: none}
@@ -204,7 +210,7 @@ margin-bottom: 22px;}
 .loadmore{ width: 200px; height: 70px; margin: auto; display: flex; flex-direction: row; align-items: center;
 justify-content: center}
 
-.replay-list{ background-color: rgba(255,255,255,0.05); padding: 30px}
+.replay-list{ background-color: rgba(255,255,255,0.05); padding: 30px;padding-bottom: 100px;}
 
 .du_exchange{ width: 700px; margin: auto; height: 670px; background-image: url(../dh_bfg.png);
 background-position: center top; background-size: 100% auto; background-repeat: no-repeat;
@@ -227,3 +233,16 @@ background-position: center top; background-size: 100% auto; background-repeat: 
   }
 
 }
+
+
+.notreplay{ text-align: center; color: #d2d2d2; line-height: 100px;font-size:30px; padding-bottom: 20px}
+
+
+.content-mod{ position: fixed; z-index: 10000; left: 0; top: 50%; transform: translate3d(0 ,-50%, 0); height: 700px; width: 100%}
+.content-mod .chart_content { background-color: #070a17; position: relative}
+.closeMod{ position: absolute; width: 80px; height: 80px; border: 1px solid #16fafc; right: 0;top: -30px;
+background-color: #090d1a; border-radius: 50%; transform: scale(0.7)}
+.closeMod::before,.closeMod::after{ position: absolute; width: 54px; height: 5px; content: " ";
+background-color: #16fafc; left: 15px; top: 38px;}
+.closeMod::before{ transform: rotate(45deg)}
+.closeMod::after{ transform: rotate(-45deg)}

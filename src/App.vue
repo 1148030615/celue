@@ -33,8 +33,8 @@
   }
 </script>
 <style>
-  body{background-color: #070a17}
-  *{ padding: 0; margin: 0}
+
+ body{ background-image: url(./assets/main_bg.jpg); background-size: contain;background-color: #070a17}
   img{ border: none}
 </style>
 

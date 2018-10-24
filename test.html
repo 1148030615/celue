@@ -1,41 +1,36 @@
 <!DOCTYPE HTML>
 <html>
+
 <head>
   <meta charset="utf-8">
   <title>菜鸟教程(runoob.com)</title>
 
   <script type="text/javascript">
-    function WebSocketTest()
-    {
-      if ("WebSocket" in window)
-      {
+    function WebSocketTest() {
+      if ("WebSocket" in window) {
 
         // 打开一个 web socket
         var ws = new WebSocket("ws://150.109.53.251:20007");
 
-        ws.onopen = function()
-        {
+        ws.onopen = function () {
           var data = '{"symbol":"btcusdt","period":"1min","coinName":"\u6bd4\u7279\u5e01"}';
           // Web Socket 已连接上，使用 send() 方法发送数据
           ws.send(data);
           alert("数据发送中...");
         };
 
-        ws.onmessage = function (evt)
-        {
+        ws.onmessage = function (evt) {
           var received_msg = evt.data;
           alert(received_msg);
           // alert("数据已接收...");
         };
 
-        ws.onclose = function()
-        {
+        ws.onclose = function () {
           // 关闭 websocket
           alert("连接已关闭...");
         };
       }
-      else
-      {
+      else {
         // 浏览器不支持 WebSocket
         alert("您的浏览器不支持 WebSocket!");
       }
@@ -43,15 +38,59 @@
   </script>
 
 </head>
+
 <body>
 
-<div id="sse">
-  <a href="javascript:WebSocketTest()">运行 WebSocket</a>
-</div>
+  <div id="sse">
+    <a href="javascript:WebSocketTest()">运行 WebSocket</a>
+  </div>
 
 </body>
+
 </html>
+<script>
+  function sort(array, type) {
+    var types = type || 0;
+    if (types == 0) {
+      array.sort(function sortNumber2(num1, num2) {
+        return num2 - num1
+      });
+    } else {
+      array.sort(function sortNumber(num1, num2) {
+        return num1 - num2
+      });
+    }
+  };
 
 
+
+  var array = [207.74, 207.6, 207.5, 207.92]
+  sort(array, 1);
+  console.log(array)
+
+
+
+
+
+
+
+
+
+
+  function sortNumber(a, b) {
+    return a - b
+  }
+
+  var array = [207.74, 207.6, 207.5, 207.92]
+
+  console.log(arr + "<br />")
+  console.log(arr.sort(sortNumber))
+</script>
+
+__CSS__
+__JS__
+
+http://jb.emiaoapp.com/admin/login/index.html
 这是CSS里面的图片路径：../images
 这是JS里面的图片路径：../../static/api/images
+http://jb.emiaoapp.com/api/index/intelligent_h5

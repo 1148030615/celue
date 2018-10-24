@@ -20,7 +20,6 @@ var chartFun = {
         return num1 - num2 > 0
       });
     }
-
   },
 
   //判断是否为数字
@@ -37,7 +36,7 @@ var chartFun = {
     var u;
     var hostArr = location.host.split('.');
     u = hostArr.length === 2 ? hostArr.join('.') : hostArr.slice(1).join('.');
-    var envir = u == "bitejunshi" ? "online" : "test";
+    var envir = u == "bitejunshi.com" ? "online" : "test";
     return envir;
   },
   //
@@ -108,12 +107,23 @@ var chartFun = {
           type: 'category',
           data: data.categoryData,
           scale: true,
-          boundaryGap: false,
-          splitLine: { show: false },
+          boundaryGap : false,
+          axisLine: {
+            show:false,
+            onZero: false,
+            lineStyle:{
+              color:"#14f7fb",
+            }
+          },
+          //axisTick: {show: false},
+          //splitLine: {show: false},
+          //axisLabel: {show: false},
           splitNumber: 20,
-          axisLine: { show: false, },
-          axisTick: { show: false },
-          axisLabel: { show: false },
+          axisLabel:{ //调整x轴的lable
+            textStyle:{
+              fontSize:20 // 让字体变大
+            }
+          },
           //inverse: true
         }
       ],
@@ -386,7 +396,13 @@ var chartFun = {
    * @param {} rawData 
    */
   splitline(rawData) {
-
+    if(!rawData){
+      return {
+        categoryData: [],
+        values: []
+        //volumes: volumes
+      };
+    }
     var categoryData = [];
     var values = [];
     //var volumes = [];
@@ -442,6 +458,8 @@ var chartFun = {
       xhr.onreadystatechange = function () {
         if (xhr.readyState == 4 && (xhr.status == 200 || xhr.status == 304)) {
           fn.call(this, xhr.responseText);
+        }else{
+          //console.log(url+"：请求失败")
         }
       };
       xhr.send(data);
@@ -523,7 +541,8 @@ var chartFun = {
     context.fillStyle = color; //设置描边样式
     context.font = "26px Arial"; //设置字体大小和字体
     //绘制字体，并且指定位置
-    context.fillText(percent + "%", centerX - 25, centerY + 10);
+    context.textAlign="center";
+    context.fillText(percent + "%", centerX , centerY + 10);
 
     context.stroke(); //执行绘制
 

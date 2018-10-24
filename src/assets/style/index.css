@@ -1,7 +1,3 @@
-.main {
-  background-image: url(../main_bg.jpg);
-  background-size: contain;
-}
 .header {
   z-index: 1001;
   height: 65px;
@@ -204,6 +200,7 @@
   color: #d94e41;
 }
 .chart_content {
+  transform: rotate3d(0, 0, 0);
   background-size: 100% auto;
   position: relative;
   width: 690px;
@@ -357,7 +354,8 @@
 }
 /* 回复框 */
 .replay_form {
-  z-index: 100;
+  transform: translate3d(0, 0, 0);
+  z-index: 1000;
   position: fixed;
   left: 0;
   bottom: 0;
@@ -386,6 +384,9 @@
 }
 .replay_form_btn img {
   height: 54px;
+}
+.fencheng {
+  transform: translate3d(0, 0, 0);
 }
 /* 顶部 */
 .headers {
@@ -558,6 +559,9 @@
   justify-content: space-between;
   margin-bottom: 22px;
 }
+.celue-list-no:before {
+  display: none;
+}
 .celue_item_date {
   width: 112px;
   padding-top: 14px;
@@ -661,6 +665,13 @@
   height: 46px;
   border-top: 1px dashed #000000;
 }
+.celue_item_r .more {
+  text-align: center;
+  font-size: 24px;
+  line-height: 46px;
+  height: 46px;
+  border-top: 1px dashed #000000;
+}
 .celue_history .celue_item_r_zy,
 .celue_history .celue_item_r_content {
   display: none;
@@ -684,6 +695,7 @@
 .replay-list {
   background-color: rgba(255, 255, 255, 0.05);
   padding: 30px;
+  padding-bottom: 100px;
 }
 .du_exchange {
   width: 700px;
@@ -724,4 +736,51 @@
   margin: auto;
   font-size: 18px;
   color: #fff;
+}
+.notreplay {
+  text-align: center;
+  color: #d2d2d2;
+  line-height: 100px;
+  font-size: 30px;
+  padding-bottom: 20px;
+}
+.content-mod {
+  position: fixed;
+  z-index: 10000;
+  left: 0;
+  top: 50%;
+  transform: translate3d(0, -50%, 0);
+  height: 700px;
+  width: 100%;
+}
+.content-mod .chart_content {
+  background-color: #070a17;
+  position: relative;
+}
+.closeMod {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  border: 1px solid #16fafc;
+  right: 0;
+  top: -30px;
+  background-color: #090d1a;
+  border-radius: 50%;
+  transform: scale(0.7);
+}
+.closeMod::before,
+.closeMod::after {
+  position: absolute;
+  width: 54px;
+  height: 5px;
+  content: " ";
+  background-color: #16fafc;
+  left: 15px;
+  top: 38px;
+}
+.closeMod::before {
+  transform: rotate(45deg);
+}
+.closeMod::after {
+  transform: rotate(-45deg);
 }
