@@ -262,7 +262,7 @@
     <div class="replay-title boxsize">
         交流区
     </div>  
-    <ul class="replay-list">
+    <ul class="replay-list" id="replayinput">
         <li class="replay_item boxsize" v-for="(item,index) in replaylist">
             <div class="replay_item_row1">
                 <div class="left">
@@ -311,7 +311,7 @@
     </ul>
 
 
-    <div class="replay_form boxsize">
+    <div class="replay_form boxsize" v-if="showreplayInput">
       <input  type="input" v-model="replay_msg" :placeholder="placeholder" class="replay_form_input boxsize">
         <div class="replay_form_btn" @click="replay">
           <img src="../assets/replayicon.png"/>
@@ -408,8 +408,9 @@ export default {
       hpage: 2, //历史策略列表页码
       pageTotal: 10000, //策略列表个数
       page: 3, //策略列表页码
-      modData:{},//弹框数据
-      showmod:false,//显示弹窗
+      modData: {}, //弹框数据
+      showmod: false, //显示弹窗
+      showreplayInput:false,
       replaylist: [],
       klinedata: { Kline: [] },
       placeholder: "说说你的看法",
@@ -479,6 +480,7 @@ export default {
       this.getKlinedata();
       this.getallData();
     }, 60000);
+    this.initevent()
   },
 
   methods: {
@@ -548,7 +550,6 @@ export default {
       );
     },
 
-    
     /**
      * 评论
      */
@@ -836,7 +837,7 @@ export default {
     /**
      * 获取弹窗K线
      */
-    getModKline(date,list) {
+    getModKline(date, list) {
       let that = this;
       let period = "15min"; //K线类型 1min, 5min, 15min, 30min, 60min, 1day, 1mon, 1week, 1year
       let isok = 0; //是否读取合约策略K线 需要传1，不需要不传
@@ -856,23 +857,24 @@ export default {
         that.socketSendData.coinName +
         "&size=195" +
         "&isok=" +
-        isok+"&isday="+date;
+        isok +
+        "&isday=" +
+        date;
       chartFun.Ajax.post(apiurl + "api/Kline", postdata, function(evt) {
         let data = JSON.parse(evt);
         if (data.code == -1) {
         } else {
           var datas = data.data;
-           console.log(datas)
+          console.log(datas);
           //that.klinedata = data.data;
-          that.setModData(datas,list);
-
+          that.setModData(datas, list);
         }
       });
     },
     /**
      * 设置弹窗K线数据
      */
-    setModData(datas,pointArray) {
+    setModData(datas, pointArray) {
       let Kline = datas.kline;
       if (Kline < 5) {
         return;
@@ -881,61 +883,56 @@ export default {
       let market = datas.market;
       let lineData = chartFun.splitline(Kline);
 
-      let markPointList = chartFun.clearPoint(pointArray)
+      let markPointList = chartFun.clearPoint(pointArray);
 
       var PointRelList = chartFun.getPointRelList(
         lineData.categoryData,
         lineData.values,
         pointArray
       );
-      var option = chartFun.getOption(
-        lineData,
-        markPointList,
-        PointRelList
-      );
+      var option = chartFun.getOption(lineData, markPointList, PointRelList);
       that.kline2 = option;
     },
-    getModData(id,datas){
+    getModData(id, datas) {
       let that = this;
-      chartFun.Ajax.post(apiurl+'api/get_intelligent_info','id='+id,function(data){
+      chartFun.Ajax.post(
+        apiurl + "api/get_intelligent_info",
+        "id=" + id,
+        function(data) {
           let res = JSON.parse(data);
-          if(res.code == 1){
-           
-              that.modData = res.data;
-              that.getModKline(datas,res.data.list)
+          if (res.code == 1) {
+            that.modData = res.data;
+            that.getModKline(datas, res.data.list);
           }
-      })
+        }
+      );
 
-        //modData
+      //modData
     },
     //关闭弹窗
-    hidemode(){
+    hidemode() {
       this.showmod = false;
       //this.kline2= chartFun.getOption([], [], []);
-      this.modData = {}
+      this.modData = {};
     },
     /**
      * 历史策略列表展开、收起
      */
-  
-    setOpen(id,isday) {
-        
-        this.getModData(id,isday);
-        this.showmod = true;
-        return;
+
+    setOpen(id, isday) {
+      this.getModData(id, isday);
+      this.showmod = true;
+      return;
 
       let data = this.intelligent_yesterday;
-      if(!data[index].opened){
-        
-        
-      }else{
-        this.showmod = false
+      if (!data[index].opened) {
+      } else {
+        this.showmod = false;
       }
       data[index].opened = opened;
       this.intelligent_yesterday = [];
       this.intelligent_yesterday = data;
       console.log(index, data[index]);
-      
     },
     //整理返回数据
     setData(datas) {
@@ -958,8 +955,21 @@ export default {
       );
       that.kline = option;
     },
-    
+    initevent() {
+    let that = this;
+    window.onscroll = function() {
+      let documentClientHeight = document.documentElement.clientHeight || window.innerHeight;
+      let htmlElementClientTop = document.getElementById("replayinput").getBoundingClientRect().top;
+      console.log(documentClientHeight, htmlElementClientTop);
+      if (documentClientHeight >= htmlElementClientTop) {
+        that.showreplayInput = true;
+      } else {
+        that.showreplayInput = false;
+      }
+    };
   }
+  },
+  
 };
 </script>
 
